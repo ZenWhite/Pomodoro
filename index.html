@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pomodoro – управляй своим временем эффективно!</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/app.min.css">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png">
+</head>
+
+<body>
+    <div class="container">
+        <div class="popup settings-popup hide">
+            <div class="popup__position">
+                <div class="popup__content app-settings">
+                    <h2 class="app-settings__title">Настройки таймера</h2>
+                    <div class="app-settings__item">
+                        <label class="app-settings__label" for="work-time">Время работы:</label>
+                        <input type="number" class="app-settings__input" value="25" id="work-time" />
+                    </div>
+                    <div class="app-settings__item">
+                        <label class="app-settings__label" for="chill-time">Время отдыха:</label>
+                        <input type="number" class="app-settings__input" value="5" id="chill-time" />
+                    </div>
+                    <button class="app-settings__btn">Сохранить</button>
+                    <img src="img/confirm.svg" class="app-settings__confirm" draggable="false" />
+                </div>
+            </div>
+        </div>
+        <div class="popup about-popup hide">
+            <div class="popup__position">
+                <div class="popup__content about">
+                    <h2>О приложении</h2>
+                    <p>Метод «Помидора» — техника управления временем. Она предполагает разбиение задач на 25-минутные периоды, называемые «помидоры», сопровождаемые короткими перерывами.</p>
+                    <p>Во время работы вы должны полностью полностью сосредоточены и не отвелкаться. Для этого у вас есть перерыв.</p>
+                    <p>Я надеюсь, что моё приложение поможет вам сэкономить время и увеличить продуктивность вашего труда.</p>
+                    <div class="about__social">
+                        <a href="https://vk.com/andrew_letyuchiy" class="about__link" target="_blank">
+                            <img src="img/vk-brands.svg" alt="вк" class="about__img" draggable="false" />
+                        </a>
+                        <a href="https://github.com/ZenWhite" class="about__link" target="_blank">
+                            <img src="img/github-brands.svg" alt="гитхаб" class="about__img" draggable="false" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="top">
+            <div class="top__scores">
+                <img src="img/icon1.svg" class="top__img" alt="количество" draggable="false" />
+                <span class="top__value">0</span>
+            </div>
+            <div class="top__settings settings" title="Настройки">
+                <img src="img/settings.svg" class="top__img top__img--second" alt="настройки" draggable="false" />
+            </div>
+        </section>
+        <section class="timer">
+            <div class="timer__time"></div>
+            <div class="timer__options"></div>
+            <a href="" class="timer__play btn" title="Кликните сюда, чтобы запустить таймер"></a>
+            <a href="" class="timer__stop btn">
+                <div class="timer__line"></div>
+                <div class="timer__line"></div>
+            </a>
+        </section>
+        <section class="bottom">
+        	<h1 class="bottom__title">Pomodoro</h1>
+        	<div class="bottom__info info" title="Подробнее">
+            	<img src="img/info.svg" class="bottom__img" alt="инфо" draggable="false" />
+        	</div>
+        </section>
+    </div>
+    <script src="js/app.old.js"></script>
+</body>
+
+</html>
