@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	popups.forEach(item => {
 		item.addEventListener('click', function(e) {
-			if( e.target.classList.contains('popup') ) item.classList.add('hide');
+			if( e.target.classList.contains('popup') || e.target.classList.contains('close') ) item.classList.add('hide');
 		});
 	});
 

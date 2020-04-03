@@ -312,6 +312,42 @@ h2 {
 	        flex-direction: column;
 }
 
+.popup__close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition-duration: 300ms;
+	transition-property: opacity;
+}
+
+.popup__close:hover {
+	opacity: 0.8;
+}
+
+.popup__block {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.popup__line {
+	width: 3px;
+	height: 24px;
+	background: var(--black);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.popup__line:nth-of-type(1) {transform: translate(-50%, -50%) rotate(45deg);}
+.popup__line:nth-of-type(2) {transform: translate(-50%, -50%) rotate(-45deg);}
+
 .app-settings__title {
 	margin-bottom: 60px;
 }
@@ -353,6 +389,7 @@ h2 {
 	outline: none;
 	font-weight: bold;
 	margin-top: 60px;
+	min-height: 60px;
 }
 
 .app-settings__btn:hover {
