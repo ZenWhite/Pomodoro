@@ -75,16 +75,18 @@ window.addEventListener('DOMContentLoaded', function() {
 			if(time === 0) {
 				clearInterval(loop);
 				chillTime = !chillTime;
-				document.querySelector('body').classList.toggle('chill');
+				document.body.classList.toggle('chill');
 				showNotification();
 
 				if(chillTime === true) {
 					if(scores % 4 === 0 && scores !== 0) setPomodoro(29);
 					else setPomodoro(chillInput.value);
+					notifSet('Время работы вышло', 'Дай себе отдохнуть и сделай перерыв');
 				}  else {
 					scores++;
 					scoresBlock.textContent = scores;
 					setPomodoro(workInput.value);
+					notifSet('Время отдыха вышло', 'Вернёмся к работе!');
 				}
 			}
 		}, 1000 );
@@ -107,11 +109,33 @@ window.addEventListener('DOMContentLoaded', function() {
 		stopBtn.classList.remove('active-btn');
 		stopBtn.classList.remove('animate');
 		timeBlock.textContent = '';
+		document.body.classList.remove('chill');
 	}
 
 	function showNotification() {
 		const audio = new Audio('audio/notification.mp3');
 		audio.play();
+	}
+
+	function notifyMe (title, txt) {
+		var notification = new Notification (title, {
+			tag : "ache-mail",
+			body : txt,
+			icon : "https://www.pinclipart.com/picdir/middle/82-821023_youtube-bell-png-youtube-notification-bell-png-clipart.png"
+		});
+	}
+	
+	function notifSet (title, text) {
+		if (!("Notification" in window))
+			alert ("Ваш браузер не поддерживает уведомления.");
+		else if (Notification.permission === "granted") notifyMe(title, text);
+		else if (Notification.permission !== "denied") {
+			Notification.requestPermission (function (permission) {
+				if (!('permission' in Notification))
+					Notification.permission = permission;
+				if (permission === "granted") notifyMe(title, text);
+			});
+		}
 	}
 
 });
