@@ -22,11 +22,11 @@ window.addEventListener('DOMContentLoaded', function() {
 			this.chillTime = parseInt(chillInput.value);
 			this.setListeners();
 		}
-		render(minutes, seconds) {
+		render(minutes, seconds) {//Вывод текста и работа с DOM
 			this.txt.textContent = `${minutes}:${seconds < 10 ? '0'+seconds : seconds}`; 
 			document.querySelector('.scores').textContent = this.pomodoro;
 		}
-		setListeners() {
+		setListeners() {//Обработчики событий для таймера
 			this.root.addEventListener('click', (e) => {
 				e.preventDefault();
 				if(e.target.id == 'play') {
@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				}
 			});
 		}
-		getTime(value) {
+		getTime(value) {//Получение времени и его для таймера
 			const time = new Date();
 			if(value) {
 				time.setMinutes( time.getMinutes() + value );
@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			}
 			return time;
 		}
-		setTimer(isReturn) {
+		setTimer(isReturn) {//Запуск таймер. IsReturn нужен для возврата таймера
 			this.root.classList.add('active-timer');
 			let timerTime = this.getTime( this.isWork ? this.workTime : this.chillTime );
 			if(isReturn) timerTime = this.getTime();
@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				this.updateTimer(timerTime);
 			}, 1000 );
 		}
-		updateTimer(time) {
+		updateTimer(time) {//Вычисления времени таймера и рендер текста
 			this.total = Date.parse( time ) - Date.parse( new Date() );
 			this.minutes =  Math.floor( (this.total / 1000 / 60) % 60 );
 			this.seconds = Math.floor( (this.total / 1000) % 60 );
@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			this.isTimeEnd();
 			this.render(this.minutes, this.seconds);
 		}
-		onTimerAndHandler() {
+		onTimerAndHandler() {//Увеличение очков таймера и вывод сообщения
 			if(this.isWork) {
 				this.pomodoro++;
 				this.notifSet('Время отдыха вышло', 'Вернёмся к работе!');
@@ -80,14 +80,14 @@ window.addEventListener('DOMContentLoaded', function() {
 				this.notifSet('Время работы вышло', 'Дай себе отдохнуть и сделай перерыв');
 			}
 		}
-		stopTimer() {
+		stopTimer() {//Остановка таймера
 			clearInterval(this.loop);
 			this.loop = null;
 		}
-		returnTimer() {
+		returnTimer() {//Возврат таймера из паузы
 			this.setTimer(true);
 		}
-		isTimeEnd() {
+		isTimeEnd() {//Проверка состояния таймера
 			if(this.total === 0) {
 				this.reset();
 				this.isWork = !this.isWork;
@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				document.body.classList.toggle('chill');
 			}
 		}
-		reset() {
+		reset() {//Сброс настроек таймера
 			this.stopTimer();
 			this.total = 0;
 			this.workTime = +workInput.value;
@@ -104,14 +104,14 @@ window.addEventListener('DOMContentLoaded', function() {
 			this.root.classList.remove('active-timer');
 			this.root.querySelector('.stop-btn').classList.remove('active-btn');
 		}
-		notifyMe(title, txt) {
+		notifyMe(title, txt) {//Создание сообщения
 			const notification = new Notification (title, {
 				tag : "ache-mail",
 				body : txt,
 				icon : "https://www.pinclipart.com/picdir/middle/82-821023_youtube-bell-png-youtube-notification-bell-png-clipart.png"
 			});
 		}
-		notifSet (title, text) {
+		notifSet (title, text) {//Отправка сообщения и проиграывение аудио
 			if (!("Notification" in window)) alert ("Ваш браузер не поддерживает уведомления.");
 			else if (Notification.permission === "granted") this.notifyMe(title, text);
 			else if (Notification.permission !== "denied") {

@@ -318,6 +318,9 @@ h2 {
 	-webkit-box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
 	        box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .popup__close {
@@ -356,9 +359,7 @@ h2 {
 .popup__line:nth-of-type(1) {transform: translate(-50%, -50%) rotate(45deg);}
 .popup__line:nth-of-type(2) {transform: translate(-50%, -50%) rotate(-45deg);}
 
-.app-settings__title {
-	margin-bottom: 60px;
-}
+.app-settings__title {margin-bottom: 60px;}
 
 .app-settings__input {
 	border: none;
@@ -420,7 +421,7 @@ h2 {
 
 
 .about__social {
-	margin-top: 20px;
+	margin-top: 40px;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -449,9 +450,7 @@ h2 {
 }
 
 .about__link:hover {background: var(--green);}
-
 .about__link:not(:last-child) {margin-right: 15px;}
-
 .about__img {width: 30px;}
 
 .hide {
@@ -466,6 +465,8 @@ h2 {
 	h2 {
 		font-size: 28px;
 	}
+	.popup__content {padding: 30px 15px}
+	.app-settings__title {margin-bottom: 40px;}
 }
 
 @media(max-width: 525px) {
@@ -477,9 +478,7 @@ h2 {
 }
 
 @media(max-width: 420px) {
-	body.chill .timer {
-		background: var(--green);
-	}
+	body.chill .timer {background: var(--green);}
 	.top, .bottom {padding: 0 15px;}
 	.top {top: 0px;}
 	.bottom {bottom: 0px;}
@@ -503,13 +502,8 @@ h2 {
 	.bottom__title {font-size: 25px;}
 }
 
-@media(max-height: 568px) {
-	.popup__content {padding-bottom: 15px;}
-}
-
 @media(max-height: 500px) {
 	h2 {font-size: 20px;}
-	.popup__content {padding: 30px 15px 10px 15px;}
 	p {font-size: 12px;}
 	.about__img {
 		width: 20px;
