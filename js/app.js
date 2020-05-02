@@ -3,22 +3,16 @@ window.addEventListener('DOMContentLoaded', function() {
 	const timeBlock = document.querySelector('.timer__time'),
           playBtn = document.querySelector('.timer__play'),
           stopBtn = document.querySelector('.timer__stop'),
-          settingsBtn = document.querySelector('.settings'),
           popups = document.querySelectorAll('.popup'),
           workInput = document.querySelector('#work-time'),
           chillInput = document.querySelector('#chill-time'),
           saveBtn = document.querySelector('.app-settings__btn'),
-          confirmIcon = document.querySelector('.app-settings__confirm'),
-          infoBtn = document.querySelector('.info'),
-          scoresBlock = document.querySelector('.top__value');
+          confirmIcon = document.querySelector('.app-settings__confirm');
 
     if( localStorage.getItem('workOption') ) workInput.value = localStorage.getItem('workOption');
     if( localStorage.getItem('chillOption') ) chillInput.value = localStorage.getItem('chillOption');
 
-	let time,
-		minutes,
-		seconds,
-		loop,
+	let loop,
 		stopTime = false,
 		chillTime = false,
 		scores = 0;
@@ -33,14 +27,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	stopBtn.addEventListener('click', function(e) {
 		e.preventDefault();
-		if( this.classList.contains('active-btn') ) stopTime = false;
-		else stopTime = true;
+		stopTime = !( this.classList.contains('active-btn') );
 		this.classList.toggle('active-btn');
 	});
 
-	settingsBtn.addEventListener('click', function() {popups[0].classList.remove('hide');});
-
-	infoBtn.addEventListener('click', function() {popups[1].classList.remove('hide');});
+	document.querySelector('.settings').onclick = () => {popups[0].classList.remove('hide')};
+	document.querySelector('.info').onclick = () => {popups[1].classList.remove('hide')};
 
 	popups.forEach(item => {
 		item.addEventListener('click', function(e) {
@@ -57,26 +49,22 @@ window.addEventListener('DOMContentLoaded', function() {
 	});
 
 	function setPomodoro(value) {
-		let myDate = new Date(),
-		 	myFutureDate = new Date( myDate.getFullYear(), myDate.getMonth(), myDate.getDate(), 
-			myDate.getHours(), myDate.getMinutes() + (value - 1), myDate.getSeconds() + 59);
-	
-		updateClock( myFutureDate );
+		let myFutureDate = new Date( new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 
+			new Date().getHours(), new Date().getMinutes() + (value - 1), new Date().getSeconds() + 59),
+			myTime = updateClock(myFutureDate);
 		
 		loop = setInterval( () => {
-			if(stopTime === false) {
-				updateClock(myFutureDate);
+			if(stopTime !== false) {
+				myFutureDate = new Date( new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 
+				new Date().getHours(), new Date().getMinutes() + myTime.minutes, new Date().getSeconds() + myTime.seconds);
 			} else {
-				myDate = new Date();
-				myFutureDate = new Date( myDate.getFullYear(), myDate.getMonth(), myDate.getDate(), 
-				myDate.getHours(), myDate.getMinutes() + minutes, myDate.getSeconds() + seconds);
+				myTime = updateClock(myFutureDate);
 			}
 
-			if(time === 0) {
+			if(myTime.time === 0) {
 				clearInterval(loop);
 				chillTime = !chillTime;
 				document.body.classList.toggle('chill');
-				showNotification();
 
 				if(chillTime === true) {
 					if(scores % 4 === 0 && scores !== 0) setPomodoro(29);
@@ -84,7 +72,7 @@ window.addEventListener('DOMContentLoaded', function() {
 					notifSet('Время работы вышло', 'Дай себе отдохнуть и сделай перерыв');
 				}  else {
 					scores++;
-					scoresBlock.textContent = scores;
+					document.querySelector('.top__value').textContent = scores;
 					setPomodoro(workInput.value);
 					notifSet('Время отдыха вышло', 'Вернёмся к работе!');
 				}
@@ -93,32 +81,31 @@ window.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function updateClock( endtime ) {
-		time = Date.parse( endtime ) - Date.parse( new Date() ),
+		let time = Date.parse( endtime ) - Date.parse( new Date() ),
       		minutes = Math.floor( (time / 1000 / 60) % 60 ),
       		seconds = Math.floor( (time / 1000) % 60 );
 
-    	timeBlock.textContent = `${minutes}:${seconds < 10 ? '0' + seconds: seconds}`;
+    	timeBlock.textContent = `${minutes}:${seconds < 10 ? `0${seconds}`: seconds}`;
+
+    	return {
+    		time: time,
+    		minutes: minutes,
+    		seconds: seconds
+    	}
 	}
 
 	function resetToDefault() {
 		clearInterval(loop);
-		chillTime = false;
-		stopTime = false;
+		chillTime = stopTime = false;
 		playBtn.classList.remove('hide');
 		stopBtn.style.bottom = '-65px';
-		stopBtn.classList.remove('active-btn');
-		stopBtn.classList.remove('animate');
+		stopBtn.classList.remove('active-btn', 'animate');
 		timeBlock.textContent = '';
 		document.body.classList.remove('chill');
 	}
 
-	function showNotification() {
-		const audio = new Audio('audio/notification.mp3');
-		audio.play();
-	}
-
 	function notifyMe (title, txt) {
-		var notification = new Notification (title, {
+		const notification = new Notification (title, {
 			tag : "ache-mail",
 			body : txt,
 			icon : "https://www.pinclipart.com/picdir/middle/82-821023_youtube-bell-png-youtube-notification-bell-png-clipart.png"
@@ -126,8 +113,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	}
 	
 	function notifSet (title, text) {
-		if (!("Notification" in window))
-			alert ("Ваш браузер не поддерживает уведомления.");
+		if (!("Notification" in window)) alert ("Ваш браузер не поддерживает уведомления.");
 		else if (Notification.permission === "granted") notifyMe(title, text);
 		else if (Notification.permission !== "denied") {
 			Notification.requestPermission (function (permission) {
@@ -136,6 +122,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				if (permission === "granted") notifyMe(title, text);
 			});
 		}
+		new Audio('audio/notification.mp3').play();
 	}
 
 });
