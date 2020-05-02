@@ -42,9 +42,9 @@ body {
 	transition-property: background;
 }
 
-a {
-	text-decoration: none;
-}
+a {text-decoration: none;}
+
+a:focus {outline: none;}
 
 p {
 	font-size: 14px;
@@ -147,9 +147,7 @@ h2 {
 	text-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
-.top__settings {
-	cursor: pointer;
-}
+.top__settings {cursor: pointer;}
 
 .top__img--second {
 	-webkit-transition: 300ms;
@@ -170,7 +168,6 @@ h2 {
 }
 
 .bottom__info:hover {opacity: 1;}
-
 .bottom__img {width: 60px;}
 
 .timer {
@@ -191,6 +188,12 @@ h2 {
 	        box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
 	background: var(--white);
 	overflow: hidden;
+	-webkit-transition: 300ms;
+	-o-transition: 300ms;
+	transition: 300ms;
+	-webkit-transition-property: background;
+	-o-transition-property: background;
+	transition-property: background;
 }
 
 .timer.active-timer .timer__play {display: none;}
@@ -274,9 +277,7 @@ h2 {
 }
 
 .timer__line:not(:last-child) {margin-right: 7.5px;}
-
 .timer__stop.active-btn .timer__line {opacity: 0}
-
 .timer__stop.active-btn::after {opacity: 1;}
 
 .popup {
@@ -292,13 +293,9 @@ h2 {
 	transition-property: opacity;
 }
 
-.fade-in {
-	animation: fadeIn 0.3s;
-}
+.fade-in {animation: fadeIn 0.3s;}
 
-.fade-out {
-	animation: fadeOut 0.3s;
-}
+.fade-out {animation: fadeOut 0.3s;}
 
 .popup__position {
 	position: absolute;
@@ -391,6 +388,7 @@ h2 {
 	        align-items: center;
 	width: 100%;
 	height: 60px;
+	border-radius: 60px;
 	color: var(--white);
 	font-size: 20px;
 	cursor: pointer;
@@ -476,10 +474,12 @@ h2 {
 		height: 100%;
 		border-radius: 0px;
 	}
-	.popup__content {-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;}
 }
 
 @media(max-width: 420px) {
+	body.chill .timer {
+		background: var(--green);
+	}
 	.top, .bottom {padding: 0 15px;}
 	.top {top: 0px;}
 	.bottom {bottom: 0px;}

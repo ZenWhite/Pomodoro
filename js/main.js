@@ -72,9 +72,12 @@ window.addEventListener('DOMContentLoaded', function() {
 			this.isTimeEnd();
 			this.render(this.minutes, this.seconds);
 		}
-		updatePomodoro() {
+		onTimerAndHandler() {
 			if(this.isWork) {
 				this.pomodoro++;
+				this.notifSet('Время отдыха вышло', 'Вернёмся к работе!');
+			} else {
+				this.notifSet('Время работы вышло', 'Дай себе отдохнуть и сделай перерыв');
 			}
 		}
 		stopTimer() {
@@ -89,7 +92,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				this.reset();
 				this.isWork = !this.isWork;
 				this.setTimer();
-				this.updatePomodoro();
+				this.onTimerAndHandler();
 				document.body.classList.toggle('chill');
 			}
 		}
@@ -100,6 +103,25 @@ window.addEventListener('DOMContentLoaded', function() {
 			this.chillTime = +chillInput.value;
 			this.root.classList.remove('active-timer');
 			this.root.querySelector('.stop-btn').classList.remove('active-btn');
+		}
+		notifyMe(title, txt) {
+			const notification = new Notification (title, {
+				tag : "ache-mail",
+				body : txt,
+				icon : "https://www.pinclipart.com/picdir/middle/82-821023_youtube-bell-png-youtube-notification-bell-png-clipart.png"
+			});
+		}
+		notifSet (title, text) {
+			if (!("Notification" in window)) alert ("Ваш браузер не поддерживает уведомления.");
+			else if (Notification.permission === "granted") this.notifyMe(title, text);
+			else if (Notification.permission !== "denied") {
+				Notification.requestPermission (function (permission) {
+					if (!('permission' in Notification))
+						Notification.permission = permission;
+					if (permission === "granted") this.notifyMe(title, text);
+				});
+			}
+			new Audio('audio/notification.mp3').play();
 		}
 	}
 
@@ -117,6 +139,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		item.addEventListener('click', onDeletePopupHandler);
 	});
 
+	//Функции событий
 	function onAppendPopupHandler(e) {
 		e.preventDefault();
 		const popup = document.querySelector(`.${this.dataset.popup}`);
