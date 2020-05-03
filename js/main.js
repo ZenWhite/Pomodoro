@@ -157,6 +157,9 @@ window.addEventListener('DOMContentLoaded', function() {
 		const parent = this.closest('.popup');
 		parent.classList.add('hide');
 
+		if( workInput.value < 1 ) workInput.value = 1;
+		if( chillInput.value < 1 ) chillInput.value = 1;
+
 		timer.reset();
 		document.body.classList.remove('chill');
 	}

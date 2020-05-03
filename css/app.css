@@ -2,7 +2,7 @@
 	--red: #F73E30;
 	--black: #000;
 	--white: #fff;
-	--green: #88E23A;
+	--green: #88e23a;
 }
 
 ::-moz-selection {
@@ -19,6 +19,8 @@
 	margin: 0;
 	padding: 0;
 }
+
+img[alt="www.000webhost.com"] {display: none;}
 
 body {
 	height: 100vh;
@@ -418,7 +420,6 @@ h2 {
 }
 
 .confirm-active {-webkit-animation: jump 1s;animation: jump 1s;}
-
 
 .about__social {
 	margin-top: 40px;
